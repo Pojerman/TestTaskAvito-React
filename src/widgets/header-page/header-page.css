@@ -1,0 +1,9 @@
+.title {
+    color: #FFFFFF !important;
+}
+
+.ant-space > .ant-space-item:first-child {
+    position: sticky;
+    z-index: 1;
+    top: 0;
+}
