@@ -1,4 +1,4 @@
-import {Collapse, Select, Slider, Tooltip} from "antd";
+import {Collapse, InputNumber, Select, Slider, Tooltip} from "antd";
 import React, {useEffect, useState} from "react";
 import {FilterOption} from "../../shared/utils/utils";
 import {Filter, FilterItem, FilterSearch} from "../../shared/types/filter";
@@ -14,8 +14,12 @@ const onSearch = (value: string) => {
 };
 
 export default function CollapsePage({ onFilterChange }: Props) {
-    const [genres, setGenres] = useState<Filter[]>([])
-    const [countries, setCountries] = useState<Filter[]>([])
+    const [genres, setGenres] = useState<Filter[]>([]);
+    const [countries, setCountries] = useState<Filter[]>
+    ([]);
+    const [ageRating, setAgeRating] = useState<string  | null>(null);
+    const [fromAge, setFromAge] = useState<number | null>(null);
+    const [toAge, setToAge] = useState<number | null>(null);
 
     useEffect(() => {
         getCountries()
@@ -50,17 +54,26 @@ export default function CollapsePage({ onFilterChange }: Props) {
 
     }, []);
 
-    const handleCountryChange = (value: string, option: Filter | Filter[]) => {
+    const handleCountryChange = (option: Filter | Filter[]) => {
         if (!Array.isArray(option)) {
             const {label} = option;
             onFilterChange('country', label);
         }
     };
 
-    const handleGenreChange = (value: string, option: Filter | Filter[]) => {
+    const handleGenreChange = (option: Filter | Filter[]) => {
         if (!Array.isArray(option)) {
             const {label} = option;
             onFilterChange('genre', label);
+        }
+    };
+
+    const handleAgeChange = (index: number) => (value: number | null) => {
+        index === 0 ? setFromAge(value) : setToAge(value);
+        if (fromAge !== null && toAge !== null) {
+            setAgeRating(`${fromAge}-${toAge}`);
+        } else {
+            setAgeRating(String(value))
         }
     };
 
@@ -99,7 +112,10 @@ export default function CollapsePage({ onFilterChange }: Props) {
             {
                 key: '3',
                 label: FilterLabel.Age,
-                children: <Slider min={0} max={18} range defaultValue={[0, 18]} tooltip={{placement: "bottom" }}/>
+                children: <>
+                    <InputNumber min={0} max={18} defaultValue={fromAge} placeholder="От" onChange={handleAgeChange(0)}/>
+                    <InputNumber min={0} max={18} placeholder="До" onChange={handleAgeChange(1)}/>
+                </>
             }
         ]}></Collapse>
     )

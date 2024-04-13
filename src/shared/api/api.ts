@@ -37,34 +37,46 @@ export const getGenres = async (): Promise<FilterItem[] | []> => {
     }
 }
 
-export const getFilmsAndSeries = async (page: number = DEFAULT_PAGE, limit: number = PAGE_SIZE): Promise<FilmUniversal> => {
+export const getFilmsAndSeries = async (page: number = DEFAULT_PAGE, limit: number = PAGE_SIZE, filters?: FilterSearch): Promise<FilmUniversal> => {
     try {
+        const params: any = {
+            page,
+            limit,
+            selectFields: [
+                'id',
+                'poster',
+                'name',
+                'movieLength',
+                'year',
+                'countries',
+                'genres',
+                'persons',
+                'rating',
+                'shortDescription',
+                'isSeries',
+                'alternativeName'
+            ],
+            sortField: '',
+            sortType: 1,
+        };
+
+        if (filters) {
+            const { country, genre } = filters;
+            if (country) {
+                params["countries.name"] = country;
+            }
+            if (genre) {
+                params["genres.name"] = genre;
+            }
+        }
+
         const response = await axios.get(`${API_URL}/v1.4/movie`, {
-            params: {
-                page,
-                limit,
-                selectFields: [
-                    'id',
-                    'poster',
-                    'name',
-                    'movieLength',
-                    'year',
-                    'countries',
-                    'genres',
-                    'persons',
-                    'rating',
-                    'shortDescription',
-                    'isSeries',
-                    'alternativeName'
-                ],
-                sortField: '',
-                sortType: 1,
-            },
+            params,
             headers: {
                 'X-API-KEY': process.env.REACT_APP_API_TOKEN
             }
-        })
-        return response.data
+        });
+        return response.data;
     } catch (e) {
         console.log(e)
         return {docs: [], limit: 0, page: 0, pages: 0, total: 0};

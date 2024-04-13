@@ -11,4 +11,5 @@ export interface FilterItem {
 export interface FilterSearch {
     country: string;
     genre: string;
+    ageRating: string | string[];
 }
