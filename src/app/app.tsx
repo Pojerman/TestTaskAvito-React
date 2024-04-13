@@ -14,7 +14,7 @@ export default function App() {
     return(
         <Layout>
             <Space direction="vertical" size="large" style={{ display: 'flex' }}>
-           <HeaderPage />
+            <HeaderPage />
             <Content className="content">
                 <Routes>
                     <Route path={AppRoutes.Main} element={<Main />}></Route>

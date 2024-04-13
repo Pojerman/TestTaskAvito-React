@@ -61,12 +61,15 @@ export const getFilmsAndSeries = async (page: number = DEFAULT_PAGE, limit: numb
         };
 
         if (filters) {
-            const { country, genre } = filters;
+            const { country, genre , ageRating} = filters;
             if (country) {
                 params["countries.name"] = country;
             }
             if (genre) {
                 params["genres.name"] = genre;
+            }
+            if (ageRating) {
+                params["ageRating"] = ageRating;
             }
         }
 
@@ -83,40 +86,14 @@ export const getFilmsAndSeries = async (page: number = DEFAULT_PAGE, limit: numb
     }
 }
 
-
-export const getFilter = async (filters: FilterSearch): Promise<FilmUniversal> => {
+export const getMovieSearch = async (query: string): Promise<FilmUniversal> => {
     try {
-        const { country, genre } = filters;
-        const params: any = {
-            page: DEFAULT_PAGE,
-            limit: PAGE_SIZE,
-            selectFields: [
-                'id',
-                'poster',
-                'name',
-                'movieLength',
-                'year',
-                'countries',
-                'genres',
-                'persons',
-                'rating',
-                'shortDescription',
-                'isSeries',
-                'alternativeName'
-            ],
-            sortField: '',
-            sortType: 1,
-        };
-
-        if (country) {
-            params["countries.name"] = country;
-        }
-
-        if (genre) {
-            params["genres.name"] = genre;
-        }
-        const response = await axios.get(`${API_URL}/v1.4/movie`, {
-            params,
+        const response = await axios.get(`${API_URL}/v1.4/movie/search`, {
+            params: {
+                page: DEFAULT_PAGE,
+                limit: PAGE_SIZE,
+                query,
+            },
             headers: {
                 'X-API-KEY': process.env.REACT_APP_API_TOKEN
             }

@@ -34,6 +34,7 @@ export interface FilmAndSeries {
     rating: Rating;
     isSeries: boolean;
     alternativeName: string;
+    seriesLength: number;
 }
 
 export interface FilmUniversal {

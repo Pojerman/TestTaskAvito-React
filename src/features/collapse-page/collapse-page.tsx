@@ -1,25 +1,20 @@
-import {Collapse, InputNumber, Select, Slider, Tooltip} from "antd";
+import {Collapse, Form, InputNumber, Select, Slider, Tooltip} from "antd";
 import React, {useEffect, useState} from "react";
 import {FilterOption} from "../../shared/utils/utils";
 import {Filter, FilterItem, FilterSearch} from "../../shared/types/filter";
-import {getCountries, getFilter, getGenres} from "../../shared/api/api";
+import {getCountries, getGenres} from "../../shared/api/api";
 import {FilterLabel} from "../../shared/enum/enum";
 
 interface Props {
     onFilterChange: (filterType: keyof FilterSearch, value: string) => void;
 }
 
-const onSearch = (value: string) => {
-    // console.log('search:', value);
-};
-
 export default function CollapsePage({ onFilterChange }: Props) {
     const [genres, setGenres] = useState<Filter[]>([]);
     const [countries, setCountries] = useState<Filter[]>
     ([]);
-    const [ageRating, setAgeRating] = useState<string  | null>(null);
-    const [fromAge, setFromAge] = useState<number | null>(null);
-    const [toAge, setToAge] = useState<number | null>(null);
+    const [fromValue, setFromValue] = useState<number | null>(null);
+    const [toValue, setToValue] = useState<number | null>(null);
 
     useEffect(() => {
         getCountries()
@@ -54,28 +49,51 @@ export default function CollapsePage({ onFilterChange }: Props) {
 
     }, []);
 
-    const handleCountryChange = (option: Filter | Filter[]) => {
+    const handleCountryChange = (label: string, option: Filter | Filter[]) => {
         if (!Array.isArray(option)) {
             const {label} = option;
             onFilterChange('country', label);
         }
     };
 
-    const handleGenreChange = (option: Filter | Filter[]) => {
+    const handleGenreChange = (label: string, option: Filter | Filter[]) => {
         if (!Array.isArray(option)) {
             const {label} = option;
             onFilterChange('genre', label);
         }
     };
 
-    const handleAgeChange = (index: number) => (value: number | null) => {
-        index === 0 ? setFromAge(value) : setToAge(value);
-        if (fromAge !== null && toAge !== null) {
-            setAgeRating(`${fromAge}-${toAge}`);
+    const handleInputChange = (name: "from" | "to", value: number | null) => {
+        if (name === "from") {
+            setFromValue(value);
         } else {
-            setAgeRating(String(value))
+            setToValue(value);
         }
     };
+
+    const formatRange = (from: number | null, to: number | null): string => {
+        if (from !== null && to !== null) {
+            return `${from}-${to}`;
+        } else if (from !== null) {
+            return `${from >= 0 && from <= 18 ? "+" : ""}${from}`;
+        } else if (to !== null) {
+            return to.toString();
+        } else {
+            return "";
+        }
+    };
+
+    useEffect(() => {
+        const timerId = setTimeout(() => {
+            const formattedRange = formatRange(fromValue, toValue);
+            onFilterChange('ageRating', formattedRange);
+        }, 1000);
+
+        return () => {
+            clearTimeout(timerId);
+        };
+    }, [fromValue, toValue]);
+
 
     return(
         <Collapse defaultActiveKey={['1', '2', '3']} ghost items={[
@@ -87,7 +105,6 @@ export default function CollapsePage({ onFilterChange }: Props) {
                     placeholder="Все страны"
                     optionFilterProp="children"
                     onChange={handleCountryChange}
-                    onSearch={onSearch}
                     filterOption={FilterOption}
                     size="middle"
                     style={{ width: 200 }}
@@ -102,7 +119,6 @@ export default function CollapsePage({ onFilterChange }: Props) {
                     placeholder="Все жанры"
                     optionFilterProp="children"
                     onChange={handleGenreChange}
-                    onSearch={onSearch}
                     filterOption={FilterOption}
                     size="middle"
                     style={{ width: 200 }}
@@ -113,8 +129,26 @@ export default function CollapsePage({ onFilterChange }: Props) {
                 key: '3',
                 label: FilterLabel.Age,
                 children: <>
-                    <InputNumber min={0} max={18} placeholder="От" onChange={handleAgeChange(0)}/>
-                    <InputNumber min={0} max={18} placeholder="До" onChange={handleAgeChange(1)}/>
+                    <Form style={{display: "flex", gap: "16px"}}>
+                        <Form.Item<string> name="from">
+                            <InputNumber
+                                min={0}
+                                max={18}
+                                placeholder="От"
+                                onChange={(value) => handleInputChange("from", value)}
+                                value={fromValue}
+                            />
+                        </Form.Item>
+                        <Form.Item<string> name="to">
+                            <InputNumber
+                                min={0}
+                                max={18}
+                                placeholder="До"
+                                onChange={(value) => handleInputChange("to", value)}
+                                value={toValue}
+                            />
+                        </Form.Item>
+                    </Form>
                 </>
             }
         ]}></Collapse>

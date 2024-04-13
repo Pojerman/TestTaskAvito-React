@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Avatar, Divider, Layout, List, Space, theme} from "antd";
+import {Avatar, Divider, Layout, List, Skeleton, Space, theme} from "antd";
 import SiderPage from "../../widgets/sider-page/sider-page";
 import {Content} from "antd/es/layout/layout";
 import { LikeOutlined, MessageOutlined, StarOutlined } from '@ant-design/icons';
@@ -22,7 +22,7 @@ export default function Main() {
         token: { colorBgContainer, borderRadiusLG },
     } = theme.useToken();
 
-    const [filters, setFilters] = useState<FilterSearch>({country: "", genre: ""});
+    const [filters, setFilters] = useState<FilterSearch>({country: "", genre: "", ageRating: ""});
 
     const handleFilterChange = (filterType: keyof FilterSearch, value: string) => {
         setFilters(prevFilters => ({
@@ -31,14 +31,15 @@ export default function Main() {
         }));
     };
 
-
     return(
-        <Layout style={{ padding: '24px 0', background: colorBgContainer, borderRadius: borderRadiusLG }}>
-            <SiderPage onFilterChange={handleFilterChange}></SiderPage>
-            <Divider type="vertical" style={{"height": "auto"}}></Divider>
-            <Content style={{minHeight: 280, padding: '0 24px 0 16px' }}>
-                <ListPage filters={filters}></ListPage>
-            </Content>
-        </Layout>
+            <Layout style={{ padding: '24px 0', background: colorBgContainer, borderRadius: borderRadiusLG }}>
+                <SiderPage onFilterChange={handleFilterChange}></SiderPage>
+                <Divider type="vertical" style={{"height": "auto"}}></Divider>
+                <Content style={{minHeight: 280, padding: '0 24px 0 16px' }}>
+                    <ListPage filters={filters}></ListPage>
+                </Content>
+            </Layout>
+
+
     )
 }
