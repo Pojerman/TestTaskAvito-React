@@ -113,7 +113,7 @@ export default function CollapsePage({ onFilterChange }: Props) {
                 key: '3',
                 label: FilterLabel.Age,
                 children: <>
-                    <InputNumber min={0} max={18} defaultValue={fromAge} placeholder="От" onChange={handleAgeChange(0)}/>
+                    <InputNumber min={0} max={18} placeholder="От" onChange={handleAgeChange(0)}/>
                     <InputNumber min={0} max={18} placeholder="До" onChange={handleAgeChange(1)}/>
                 </>
             }
