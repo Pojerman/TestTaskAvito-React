@@ -39,6 +39,9 @@ export default function HeaderPage() {
     }, [searchValue]);
 
     const handleSearchChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+        if(!event.target.value) {
+            setShowList(false);
+        }
         setSearchValue(event.target.value);
     };
 
@@ -48,7 +51,7 @@ export default function HeaderPage() {
 
     return(
         <Header onClick={handleClickOutsideList} className="header">
-            <Title className="title">Кинопоиск Dev <Input placeholder="Фильмы, сериалы" onChange={handleSearchChange} /></Title>
+            <Title className="title">Кинопоиск Dev <Input placeholder="Фильмы, сериалы" onChange={handleSearchChange} allowClear/></Title>
             {showList && (
                 <List className="search-list"
                     style={{ background: colorBgContainer, borderRadius: borderRadiusLG}}
