@@ -6,6 +6,8 @@ import Paragraph from "antd/es/typography/Paragraph";
 import {joinArrayWithCommas} from "../../shared/utils/utils";
 import {FilterSearch} from "../../shared/types/filter";
 import {DEFAULT_PAGE, PAGE_SIZE} from "../../shared/consts/consts";
+import {Link} from "react-router-dom";
+import {AppRoutes} from "../../shared/types/route";
 
 interface Props {
     filters: FilterSearch;
@@ -58,7 +60,7 @@ export default function ListPage({ filters }: Props) {
                         }
                     >
                         <List.Item.Meta
-                            title={<a href="#">{item.name}</a>}
+                            title={<Link to={AppRoutes.Move_Details.replace(':id', String(item.id))}>{item.name}</Link>}
                             description={`
                             ${item.alternativeName ? item.alternativeName + ", " : ""}
                             ${item.year},

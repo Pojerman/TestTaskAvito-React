@@ -8,12 +8,11 @@ import HeaderPage from "../widgets/header-page/header-page";
 import {Content} from "antd/es/layout/layout";
 import FooterPage from "../widgets/footer-page/footer-page";
 import './app.css';
-import SiderPage from "../widgets/sider-page/sider-page";
 
 export default function App() {
     return(
         <Layout>
-            <Space direction="vertical" size="large" style={{ display: 'flex' }}>
+            <Space direction="vertical" size="large" className="space">
             <HeaderPage />
             <Content className="content">
                 <Routes>

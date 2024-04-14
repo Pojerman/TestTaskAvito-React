@@ -15,8 +15,6 @@ export default function SiderPage({onFilterChange}: Props) {
         token: { colorBgContainer, borderRadiusLG },
     } = theme.useToken();
 
-    const [size, setSize] = useState<SizeType>('middle');
-
     return(
         <Sider style={{ background: colorBgContainer }} width={230}>
             <Space size="middle" style={{ position: "sticky", zIndex: "1", top: "70px" }}>

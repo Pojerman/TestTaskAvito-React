@@ -1,7 +1,7 @@
 import axios, {AxiosResponse} from 'axios';
 import {FilterItem, FilterSearch} from "../types/filter";
 import {API_URL, DEFAULT_PAGE, PAGE_SIZE} from "../consts/consts";
-import {FilmUniversal} from "../types/films";
+import {FilmAndSeries, FilmItem, FilmPoster, FilmReview, FilmUniversal, Person, Poster, Rating} from "../types/films";
 
 export const getCountries = async (): Promise<FilterItem[] | []> => {
     try {
@@ -104,3 +104,64 @@ export const getMovieSearch = async (query: string): Promise<FilmUniversal> => {
         return {docs: [], limit: 0, page: 0, pages: 0, total: 0};
     }
 }
+
+export const getPosters = async (page: number = DEFAULT_PAGE, limit: number = PAGE_SIZE, id: string): Promise<FilmPoster> => {
+    try {
+        const response = await axios.get(`${API_URL}/v1.4/image`, {
+            params: {
+                page,
+                limit,
+                movieId: id,
+            },
+            headers: {
+                'X-API-KEY': process.env.REACT_APP_API_TOKEN
+            }
+        });
+        return response.data;
+    } catch (e) {
+        console.log(e);
+        return {docs: [], limit: 0, page: 0, pages: 0, total: 0};
+    }
+}
+
+export const getFilm = async (id: string): Promise<FilmAndSeries | null> => {
+    try {
+        const response = await axios.get(`${API_URL}/v1.4/movie/${id}`, {
+            headers: {
+                'X-API-KEY': process.env.REACT_APP_API_TOKEN
+            }
+        });
+        return response.data;
+    } catch (e) {
+        console.log(e);
+        return null;
+    }
+}
+
+export const getReview = async (page: number = DEFAULT_PAGE, id: string): Promise<FilmReview> => {
+    try {
+        const response = await axios.get(`${API_URL}/v1.4/review`, {
+            params: {
+                page,
+                limit: PAGE_SIZE,
+                movieId: id,
+                selectFields: [
+                    "id",
+                    "movieId",
+                    "type",
+                    "review",
+                    "date",
+                ]
+
+            },
+            headers: {
+                'X-API-KEY': process.env.REACT_APP_API_TOKEN
+            }
+        });
+        return response.data;
+    } catch (e) {
+        console.log(e);
+        return {docs: [], limit: 0, page: 0, pages: 0, total: 0};
+    }
+}
+

@@ -1,5 +1,18 @@
 .title {
     color: #FFFFFF !important;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+}
+
+.title > input {
+    width: 40%;
+}
+
+.search-list {
+    border: 1px solid rgba(5, 5, 5, 0.06);
+    margin: 0 0 0 auto;
+    width: 260px;
 }
 
 .ant-space > .ant-space-item:first-child {

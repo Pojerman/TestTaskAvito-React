@@ -1,3 +1,11 @@
 .content {
     padding: 0 50px;
 }
+
+.space {
+    display: flex;
+}
+
+.ant-layout-content {
+    display: flex;
+}
