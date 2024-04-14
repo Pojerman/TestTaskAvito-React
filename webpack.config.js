@@ -35,7 +35,7 @@ module.exports = (env) => {
             new Dotenv(),
         ],
         devServer: {
-            historyApiFallback: true
+            historyApiFallback: true,
         }
     }
 };

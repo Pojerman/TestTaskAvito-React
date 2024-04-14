@@ -1,7 +1,7 @@
-import axios, {AxiosResponse} from 'axios';
+import axios from 'axios';
 import {FilterItem, FilterSearch} from "../types/filter";
 import {API_URL, DEFAULT_PAGE, PAGE_SIZE} from "../consts/consts";
-import {FilmAndSeries, FilmItem, FilmPoster, FilmReview, FilmUniversal, Person, Poster, Rating} from "../types/films";
+import {FilmAndSeries, FilmPoster, FilmReview, FilmUniversal} from "../types/films";
 import axiosRetry from "axios-retry";
 
 axiosRetry(axios, {
@@ -22,7 +22,7 @@ export const getCountries = async (): Promise<FilterItem[] | []> => {
         return response.data;
     } catch (e) {
         console.log(e);
-        return [];//В случае ошибки запрос повторяется 3 раза - дописать
+        return [];
     }
 }
 
@@ -39,7 +39,7 @@ export const getGenres = async (): Promise<FilterItem[] | []> => {
         return response.data;
     } catch (e) {
         console.log(e);
-        return [];//В случае ошибки запрос повторяется 3 раза - дописать
+        return [];
     }
 }
 
@@ -68,10 +68,10 @@ export const getFilmsAndSeries = async (page: number = DEFAULT_PAGE, limit: numb
 
         if (filters) {
             const { country, genre , ageRating} = filters;
-            if (country) {
+            if (country && country !== 'Все страны') {
                 params["countries.name"] = country;
             }
-            if (genre) {
+            if (genre && genre !== 'Все жанры') {
                 params["genres.name"] = genre;
             }
             if (ageRating) {
