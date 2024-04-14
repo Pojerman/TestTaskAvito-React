@@ -4,7 +4,7 @@ import {Card, List} from "antd";
 import Meta from "antd/es/card/Meta";
 import {Link} from "react-router-dom";
 import {AppRoutes} from "../../shared/types/route";
-
+import "./similar-film-tab.css";
 
 interface SimilarFilmsProps {
     similarMovies: similarMovies[];
@@ -15,7 +15,7 @@ export default function SimilarFilmTab({similarMovies}: SimilarFilmsProps) {
         <List grid={{
             gutter: 16,
             xs: 1,
-            sm: 2,
+            sm: 1,
             md: 2,
             lg: 3,
             xl: 4,
@@ -28,7 +28,7 @@ export default function SimilarFilmTab({similarMovies}: SimilarFilmsProps) {
                           style={{width: 300, height: 550}}
                           cover={<img alt="poster" height={450} width={300} src={item.poster.url} />}
                       >
-                          <Meta title={<Link to={AppRoutes.Move_Details.replace(":id", String(item.id))}>{item.name}</Link>} description={`${item.alternativeName}, ${item.year}`} />
+                          <Meta title={<Link to={AppRoutes.Move_Details.replace(":id", String(item.id))}>{item.name}</Link>} description={`${item.alternativeName ? item.alternativeName + ", " + item.year : item.year}`} />
                       </Card>
                   </List.Item>
               )}

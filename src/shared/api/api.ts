@@ -2,6 +2,12 @@ import axios, {AxiosResponse} from 'axios';
 import {FilterItem, FilterSearch} from "../types/filter";
 import {API_URL, DEFAULT_PAGE, PAGE_SIZE} from "../consts/consts";
 import {FilmAndSeries, FilmItem, FilmPoster, FilmReview, FilmUniversal, Person, Poster, Rating} from "../types/films";
+import axiosRetry from "axios-retry";
+
+axiosRetry(axios, {
+    retries: 3,
+    retryDelay: axiosRetry.exponentialDelay
+});
 
 export const getCountries = async (): Promise<FilterItem[] | []> => {
     try {

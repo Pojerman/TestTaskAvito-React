@@ -1,4 +1,4 @@
-import {Collapse, Form, InputNumber, Select, Slider, Tooltip} from "antd";
+import {Collapse, Form, InputNumber, Select} from "antd";
 import React, {useEffect, useState} from "react";
 import {FilterOption} from "../../shared/utils/utils";
 import {Filter, FilterItem, FilterSearch} from "../../shared/types/filter";
@@ -96,61 +96,64 @@ export default function CollapsePage({ onFilterChange }: Props) {
 
 
     return(
-        <Collapse defaultActiveKey={['1', '2', '3']} ghost items={[
-            {
-                key: '1',
-                label: FilterLabel.Countries,
-                children: <Select
-                    showSearch
-                    placeholder="Все страны"
-                    optionFilterProp="children"
-                    onChange={handleCountryChange}
-                    filterOption={FilterOption}
-                    size="middle"
-                    style={{ width: 200 }}
-                    options={countries}>
-                </Select>
-            },
-            {
-                key: '2',
-                label: FilterLabel.Genres,
-                children: <Select
-                    showSearch
-                    placeholder="Все жанры"
-                    optionFilterProp="children"
-                    onChange={handleGenreChange}
-                    filterOption={FilterOption}
-                    size="middle"
-                    style={{ width: 200 }}
-                    options={genres}>
-                </Select>
-            },
-            {
-                key: '3',
-                label: FilterLabel.Age,
-                children: <>
-                    <Form style={{display: "flex", gap: "16px"}}>
-                        <Form.Item<string> name="from">
-                            <InputNumber
-                                min={0}
-                                max={18}
-                                placeholder="От"
-                                onChange={(value) => handleInputChange("from", value)}
-                                value={fromValue}
-                            />
-                        </Form.Item>
-                        <Form.Item<string> name="to">
-                            <InputNumber
-                                min={0}
-                                max={18}
-                                placeholder="До"
-                                onChange={(value) => handleInputChange("to", value)}
-                                value={toValue}
-                            />
-                        </Form.Item>
-                    </Form>
-                </>
-            }
-        ]}></Collapse>
+        <>
+            <Collapse className="filter-collapse" defaultActiveKey={['1', '2', '3']} ghost items={[
+                {
+                    key: '1',
+                    label: FilterLabel.Countries,
+                    children: <Select
+                        showSearch
+                        placeholder="Все страны"
+                        optionFilterProp="children"
+                        onChange={handleCountryChange}
+                        filterOption={FilterOption}
+                        size="middle"
+                        style={{ width: 200 }}
+                        options={countries}>
+                    </Select>
+                },
+                {
+                    key: '2',
+                    label: FilterLabel.Genres,
+                    children: <Select
+                        showSearch
+                        placeholder="Все жанры"
+                        optionFilterProp="children"
+                        onChange={handleGenreChange}
+                        filterOption={FilterOption}
+                        size="middle"
+                        style={{ width: 200 }}
+                        options={genres}>
+                    </Select>
+                },
+                {
+                    key: '3',
+                    label: FilterLabel.Age,
+                    children: <>
+                        <Form style={{display: "flex", gap: "16px"}}>
+                            <Form.Item name="from">
+                                <InputNumber
+                                    min={0}
+                                    max={18}
+                                    placeholder="От"
+                                    onChange={(value) => handleInputChange("from", value)}
+                                    value={fromValue}
+                                />
+                            </Form.Item>
+                            <Form.Item name="to">
+                                <InputNumber
+                                    min={0}
+                                    max={18}
+                                    placeholder="До"
+                                    onChange={(value) => handleInputChange("to", value)}
+                                    value={toValue}
+                                />
+                            </Form.Item>
+                        </Form>
+                    </>
+                }
+            ]}></Collapse>
+        </>
+
     )
 }

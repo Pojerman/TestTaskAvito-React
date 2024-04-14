@@ -9,5 +9,5 @@ export enum TabsDetails {
     Review = 'Отзывы',
     Seasons = 'Сезоны',
     Posters = 'Постеры',
-    Similar = 'охожие фильмы'
+    Similar = 'Похожие фильмы'
 }

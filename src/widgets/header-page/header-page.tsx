@@ -47,7 +47,7 @@ export default function HeaderPage() {
     };
 
     return(
-        <Header onClick={handleClickOutsideList}>
+        <Header onClick={handleClickOutsideList} className="header">
             <Title className="title">Кинопоиск Dev <Input placeholder="Фильмы, сериалы" onChange={handleSearchChange} /></Title>
             {showList && (
                 <List className="search-list"

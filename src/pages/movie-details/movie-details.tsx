@@ -40,7 +40,7 @@ export default function MovieDetails() {
                     <>
                         <div className="movie-head">
                             <div className="movie-poster">
-                                <Image src={movieDetails.poster.url}></Image>
+                                <Image src={movieDetails.poster.url} className="movie-poster__img"></Image>
                             </div>
                             <div className="info-about">
                                 <Title className="about-title">{movieDetails.name}&nbsp;({movieDetails.year})</Title>

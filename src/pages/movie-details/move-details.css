@@ -9,9 +9,8 @@
     gap: 48px;
 }
 
-.movie-poster {
+.movie-poster__img {
     min-width: 260px;
-    max-width: 360px;
     width: 100%;
 }
 
@@ -21,4 +20,16 @@
 
 .about-txt {
     font-size: 18px;
+}
+
+@media screen and (min-width: 320px) and (max-width: 768px) {
+    .movie-head {
+        flex-direction: column;
+    }
+    .movie-poster {
+        text-align: center;
+    }
+    .movie-poster__img {
+        width: 70%;
+    }
 }

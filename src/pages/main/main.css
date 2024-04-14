@@ -1,0 +1,21 @@
+.list-container > .ant-list {
+    flex-grow: 1;
+}
+
+.layout-container {
+    padding: 24px 0;
+}
+
+@media screen and (min-width: 320px) and (max-width: 768px) {
+    .layout-container {
+        flex-direction: column !important;
+    }
+    .layout-container > .ant-layout-sider {
+        flex: 0 0 auto !important;
+        padding: 0 40px;
+        position: sticky;
+    }
+    .list-container {
+        width: fit-content !important;
+    }
+}

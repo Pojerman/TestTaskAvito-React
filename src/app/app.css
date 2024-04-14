@@ -6,6 +6,8 @@
     display: flex;
 }
 
-.ant-layout-content {
-    display: flex;
+@media screen and (min-width: 320px) and (max-width: 768px) {
+    .content {
+        padding: 16px;
+    }
 }
