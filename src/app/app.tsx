@@ -8,6 +8,7 @@ import HeaderPage from "../widgets/header-page/header-page";
 import {Content} from "antd/es/layout/layout";
 import FooterPage from "../widgets/footer-page/footer-page";
 import './app.css';
+import NotFound from "../pages/not-found/not-found";
 
 export default function App() {
     return(
@@ -18,6 +19,7 @@ export default function App() {
                 <Routes>
                     <Route path={AppRoutes.Main} element={<Main />}></Route>
                     <Route path={AppRoutes.Move_Details} element={<MovieDetails/>}></Route>
+                    <Route path="*" element={<NotFound/>}></Route>
                 </Routes>
             </Content>
             <FooterPage />
