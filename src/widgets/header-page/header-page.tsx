@@ -51,7 +51,7 @@ export default function HeaderPage() {
 
     return(
         <Header onClick={handleClickOutsideList} className="header">
-            <Title className="title">Кинопоиск Dev <Input placeholder="Фильмы, сериалы" onChange={handleSearchChange} allowClear/></Title>
+            <Title className="title">Кинопоиск Dev <Input style={{width: "auto"}} placeholder="Фильмы, сериалы" onChange={handleSearchChange} allowClear/></Title>
             {showList && (
                 <List className="search-list"
                     style={{ background: colorBgContainer, borderRadius: borderRadiusLG}}
